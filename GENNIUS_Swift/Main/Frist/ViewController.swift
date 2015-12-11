@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     }
     var headers:[String: String]? = [:]
     var body: String?
+    var tableView:UITableView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
