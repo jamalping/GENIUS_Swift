@@ -97,10 +97,18 @@ extension UIView {
 
 extension UIView {
     
-    func viewController() {
-//        var aa:AnyObject = self.nextResponder()
-//        do {
-//        }while ()
+    var viewController:UIViewController? {
+        get {
+            var view:UIView! = self
+            while (view != nil){
+                let nextResponder:UIResponder = view.nextResponder()!
+                if nextResponder.isKindOfClass(UIViewController){
+                    return nextResponder as? UIViewController
+                }
+                view = view.superview!
+            }
+            return nil;
+        }
     }
     
     func resetOrientation() {
