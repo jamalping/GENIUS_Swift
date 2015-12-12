@@ -8,6 +8,9 @@
 
 import Foundation
 
+func URLWithAPICode(code:String) ->String{
+    return API_URL_EXTRENAL+code
+}
 let API_URL_EXTRENAL = "http://genius-test.china-invs.cn:28080/genius_api"
 
 let kAPI_REGISTER = "/m/u/app_register.m"

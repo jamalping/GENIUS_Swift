@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import EVReflection
+
 class MyView: UIView {
     var stringToInt:((str:String)->Int)?
     init(frame: CGRect, stringToInt:(str:String)->Int) {
@@ -22,7 +24,7 @@ class MyView: UIView {
 
 class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate {
 
-    let cellIdent = "cccc"
+    let trendsTableViewCell = "TrendsTableViewCell"
     var request:Request? {
         didSet {
             oldValue?.cancel()
@@ -39,19 +41,56 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
-        self.dataSource = ["1","1","1","1","1","1","1"]
+        self.dataSource = []
         
         self.initSubViews()
+        
         
         
         // ["osType":"IOS","cipherText":"pf6SqFCvtSLmnA70J8OCZlMn47flAjYOMPdoaCuo+2aOYUKHx7i5XVaVpkjBIIHH8xt+ogsZu9yxVtvQol054jWaEOPPK5aFv/bp3rji5rlNd0ifyY+HQ/Qd0bsH0mZiiTCCdr6CsFi9zMCphpQNio0E0Wbg6zZLUHQC83by41M="]
         // http://genius-test.china-invs.cn:28080/genius_api/m/ver/get_ver.m
         // http://genius-test.china-invs.cn:28080/genius_api/m/u/app_auto_login.m
 //        request = Alamofire.request(Method.GET, "http://genius-test.china-invs.cn:28080/genius_api/m/ver/get_ver.m",encoding:.URL)
-        request = Alamofire.request(.POST, "http://genius-test.china-invs.cn:28080/genius_api/m/u/app_auto_login.m", parameters: ["osType":"IOS","cipherText":"pf6SqFCvtSLmnA70J8OCZlMn47flAjYOMPdoaCuo+2aOYUKHx7i5XVaVpkjBIIHH8xt+ogsZu9yxVtvQol054jWaEOPPK5aFv/bp3rji5rlNd0ifyY+HQ/Qd0bsH0mZiiTCCdr6CsFi9zMCphpQNio0E0Wbg6zZLUHQC83by41M="],encoding:.JSON)
-        request?.responseString(encoding: NSUTF8StringEncoding, completionHandler: { (Response) -> Void in
-            print(Response)
-        })
+        
+//        NSString *url = CSFormat(@"%@?opt=%ld&p=%ld",requestWithAction(GET_INT(kApi_get_GeniusNews)),geniusType,page);
+        
+//        NSString.localizedStringWithFormat(@"%@?opt=%ld&p=%ld", <#T##args: CVarArgType...##CVarArgType#>)
+        let url = URLWithAPICode(kAPI_GENIUS_NEWS)+"?"+"opt="+"\(1)"+"&p="+"\(1)"
+        Alamofire.request(.GET,url,encoding:.JSON)
+        .responseString { (response) -> Void in
+            print(response.result.value)
+            var dic:Dictionary = EVReflection.dictionaryFromJson(response.result.value)
+            
+//            let data = dic["data"] as! Array
+            if let data = dic["data"]{
+                for var element:NSDictionary in data as! Array{
+                    if let tt = element["serialList"]{
+                        let trendModel = TrendsModel(dictionary: tt[0] as! NSDictionary)
+                        self.dataSource?.append(trendModel)
+                    }
+                }
+            }
+            self.tableView!.reloadData()
+//            let dic = response.result.value
+//            let model = TrendsModel.init(fileNameInTemp: "sample_json")
+        }
+//            .responseString(completionHandler: { (response) -> Void in
+//                print(EVReflection.dictionaryFromJson(response.result.value as? String))
+//            })
+//        .responseJSON { (response) -> Void in
+//            print(EVReflection.dictionaryFromJson(response.result.value as? String))
+//        }
+//        EVReflection.dictionaryFromJson(<#T##json: String?##String?#>)
+//            .responseObject { (response:Result<TrendsModel,NSError>) -> Void in
+//                if let aaa = response.value {
+//                    print(aaa.stockCode)
+//                    
+//                }
+//        }
+//        request?.responseString(encoding: NSUTF8StringEncoding, completionHandler: { (response) -> Void in
+//            print(response.result.value)
+//            TrendsModel(json: response.result.value)
+//        })
     }
 
     private func initSubViews() {
@@ -66,7 +105,7 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
         self.tableView!.backgroundColor = UIColor.yellowColor()
         self.tableView!.delegate = self
         self.tableView!.dataSource = self
-        self.tableView!.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdent)
+        self.tableView!.registerNib(UINib.init(nibName: "TrendsTableViewCell", bundle: nil), forCellReuseIdentifier: trendsTableViewCell)
         self.view.addSubview(self.tableView!)
     }
     
@@ -93,8 +132,10 @@ extension ViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:UITableViewCell =  tableView.dequeueReusableCellWithIdentifier(cellIdent)!
-        cell.textLabel?.text = String(indexPath.row)
+        let cell =  tableView.dequeueReusableCellWithIdentifier(trendsTableViewCell) as! TrendsTableViewCell
+//        cell.textLabel?.text = String(indexPath.row)
+//        cell.nickNameLabel.text = String(indexPath.row)
+        cell.trendModel = self.dataSource![indexPath.row] as? TrendsModel
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

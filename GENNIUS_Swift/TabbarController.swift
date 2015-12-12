@@ -36,7 +36,7 @@ class TabbarController:UITabBarController {
             vc.tabBarItem.image = UIImage.init(named: normalImages[i])
             vc.tabBarItem.selectedImage = UIImage.init(named: selectedImages[i])
             vc.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -5)
-            self.tabBar.tintColor = MainColor
+            self.tabBar.tintColor = MAIN_COLOR
         }
         self.viewControllers = Navigations as [UIViewController]
     }
