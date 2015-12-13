@@ -34,6 +34,7 @@
 		FBDBECD21C1C20D400D9C8AF /* TrendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBDBECD11C1C20D400D9C8AF /* TrendsTableViewCell.xib */; };
 		FBDBECD41C1C297A00D9C8AF /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBECD31C1C297A00D9C8AF /* String+Extension.swift */; };
 		FBDBECD61C1C68C300D9C8AF /* TrendsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBECD51C1C68C300D9C8AF /* TrendsModel.swift */; };
+		FBDBECDC1C1D9E2A00D9C8AF /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBECDB1C1D9E2A00D9C8AF /* Presenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		FBDBECD11C1C20D400D9C8AF /* TrendsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrendsTableViewCell.xib; sourceTree = "<group>"; };
 		FBDBECD31C1C297A00D9C8AF /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		FBDBECD51C1C68C300D9C8AF /* TrendsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsModel.swift; sourceTree = "<group>"; };
+		FBDBECDB1C1D9E2A00D9C8AF /* Presenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				0010DFDD1C1AC0A10082C0C9 /* ViewController.swift */,
+				FBDBECDB1C1D9E2A00D9C8AF /* Presenter.swift */,
 				FBDBECCF1C1C208000D9C8AF /* TrendsTableViewCell.swift */,
 				FBDBECD11C1C20D400D9C8AF /* TrendsTableViewCell.xib */,
 				FBDBECD51C1C68C300D9C8AF /* TrendsModel.swift */,
@@ -504,6 +507,7 @@
 				0010DFF01C1AC2EF0082C0C9 /* BaseNavigationViewController.swift in Sources */,
 				0010DFF11C1AC2EF0082C0C9 /* BaseViewController.swift in Sources */,
 				0010DFFE1C1AC33B0082C0C9 /* UIColor+Extension.swift in Sources */,
+				FBDBECDC1C1D9E2A00D9C8AF /* Presenter.swift in Sources */,
 				0010DFEC1C1AC2230082C0C9 /* URL.swift in Sources */,
 				0010DFE21C1AC0A10082C0C9 /* FiveViewController.swift in Sources */,
 				00060CE11C1673D900A1ADA2 /* TabbarController.swift in Sources */,
